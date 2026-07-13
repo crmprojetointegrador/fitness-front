@@ -1,7 +1,10 @@
 import CardProduto from '../cardproduto/CardProduto'; 
 import type { Produto } from '../../../models/Produto' 
+import { useEffect, useState } from 'react';
 
-function ListaProdutos() {
+function ListarProdutos() {
+
+
     const produtos: Produto[] = [
         {
             id: 1,
@@ -25,6 +28,24 @@ function ListaProdutos() {
         }
     ];
 
+    //Flame botando o bedelho de colocar uma tela de loading kkkk
+      const [loading, setLoading] = useState(true);
+      useEffect(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      }, []);
+      if (loading) {
+        return (
+          <div className="flex justify-center items-center min-h-[80vh]"
+            style={{ background: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
+          >
+            <p className="text-gray-600">Carregando a lista de produtos...</p>
+          </div>
+        );
+      }
+      // Flame esteve aqui hehehe
+
     return (
         <>
             <div className="flex justify-center w-full my-4 bg-[#FFFFFF]">
@@ -44,4 +65,4 @@ function ListaProdutos() {
     );
 }
 
-export default ListaProdutos;
+export default ListarProdutos;
