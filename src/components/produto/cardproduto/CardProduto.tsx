@@ -8,8 +8,8 @@ interface CardProdutoProps {
 function CardProduto({ produto }: CardProdutoProps) {
     return (
     
-        <div className='border-slate-900 border 
-            flex flex-col rounded overflow-hidden justify-between font-poppins'> 
+        <div className='border-slate-200 border 
+            flex flex-col rounded overflow-hidden justify-between font-poppins shadow-sm'> 
                 
             <div>
                 <div className="flex w-full bg-[#C9EED9] py-2 px-4 items-center gap-4">
