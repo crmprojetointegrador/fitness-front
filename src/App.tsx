@@ -7,7 +7,8 @@ import Footer from "./components/footer/Footer"
 import Navbar from "./components/navbar/Navbar"
 import Home from "./pages/home/Home"
 import ImcPage from './pages/Imc'
-import ListarCategorias from "./pages/categorias/ListarCategorias"
+import ListarCategorias from "./components/categoria/listarcategorias/ListarCategorias"
+import ListarProdutos from "./components/produto/listarprodutos/ListarProdutos"
 import FormCategoria from './components/categoria/formcategoria/FormCategoria'
 import DeletarCategoria from './components/categoria/deletarcategoria/DeletarCategoria'
 import About from './pages/About'
@@ -27,6 +28,7 @@ function App() {
             <Route path="/imc" element={<ImcPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/categorias" element={<ListarCategorias />} />
+            <Route path="/produtos" element={<ListarProdutos />} />
             <Route path="/cadastrarcategoria" element={<FormCategoria />} />
             <Route path="/editarcategoria/:id" element={<FormCategoria />} />
             <Route path="/categorias/deletar/:id" element={<DeletarCategoria />} />
