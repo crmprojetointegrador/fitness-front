@@ -10,6 +10,7 @@ import ImcPage from './pages/Imc'
 import ListarCategorias from "./pages/categorias/ListarCategorias"
 import FormCategoria from './components/categoria/formcategoria/FormCategoria'
 import DeletarCategoria from './components/categoria/deletarcategoria/DeletarCategoria'
+import About from './pages/About'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/imc" element={<ImcPage />} />
+            <Route path="/about" element={<About />} />
             <Route path="/categorias" element={<ListarCategorias />} />
             <Route path="/cadastrarcategoria" element={<FormCategoria />} />
             <Route path="/editarcategoria/:id" element={<FormCategoria />} />
