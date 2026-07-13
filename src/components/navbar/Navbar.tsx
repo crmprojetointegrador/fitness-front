@@ -12,6 +12,7 @@ function Navbar() {
                     <Link to='/home' className='hover:text-green-700 transition'>Home</Link>
                     <Link to='/categorias' className='hover:text-green-700 transition'>Categorias</Link>
                     <Link to='/imc' className='hover:text-green-700 transition'>Calcule seu IMC</Link>
+                    <Link to='/about' className='hover:underline'>Sobre nós</Link>
                 </div>
             </div>
         </div>
