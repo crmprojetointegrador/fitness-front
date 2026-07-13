@@ -1,5 +1,5 @@
 import { Usuario } from "./Usuario";
-import { Categoria } from "./Categoria";
+import { type Categoria } from "./Categoria";
 
 export interface Produto {
   id: number;

@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 
 type Classificacao = {
   label: string;
@@ -19,7 +19,6 @@ export default function ImcPage() {
   const [altura, setAltura] = useState("");
   const [resultado, setResultado] = useState<number | null>(null);
   const [erro, setErro] = useState<string | null>(null);
-
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -43,7 +42,10 @@ export default function ImcPage() {
   const classificacao = resultado !== null ? classificarImc(resultado) : null;
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{ backgroundImage: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
+    >
       <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full">
         <h1 className="text-2xl font-bold text-gray-800 mb-2 text-center">Calculadora de IMC</h1>
         <p className="text-gray-600 text-sm mb-6 text-center">
