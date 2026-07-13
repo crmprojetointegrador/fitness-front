@@ -11,12 +11,14 @@ import ListarCategorias from "./components/categoria/listarcategorias/ListarCate
 import ListarProdutos from "./components/produto/listarprodutos/ListarProdutos"
 import FormCategoria from './components/categoria/formcategoria/FormCategoria'
 import DeletarCategoria from './components/categoria/deletarcategoria/DeletarCategoria'
+import About from './pages/About'
 
 function App() {
   return (
     <>
       <ToastContainer />
       <BrowserRouter>
+
         <Navbar />
 
         <div className="min-h-[80vh]">
@@ -24,6 +26,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/imc" element={<ImcPage />} />
+            <Route path="/about" element={<About />} />
             <Route path="/categorias" element={<ListarCategorias />} />
             <Route path="/produtos" element={<ListarProdutos />} />
             <Route path="/cadastrarcategoria" element={<FormCategoria />} />
