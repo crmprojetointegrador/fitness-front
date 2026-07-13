@@ -10,12 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.10",
     "@tailwindcss/vite": "^4.3.2",
     "axios": "^1.18.1",
+    "phosphor": "^0.7.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-loader-spinner": "^8.0.2",
     "react-router-dom": "^7.18.1",
     "react-spinners": "^0.17.0",
+    "react-toastify": "^11.1.0",
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
