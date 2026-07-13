@@ -22,3 +22,8 @@ export const atualizar = async (url: string, dados: Object, setDados: Function) 
 export const deletar = async (url: string) => {
     await api.delete(url)
 }
+
+export const cadastrarUsuario = async (url: string, dados: Object, setDados: Function) => {
+  const resposta = await api.post(url, dados);
+  setDados(resposta.data);
+}

@@ -22,12 +22,10 @@ function Navbar() {
 
                     {estaLogado ? (
                         <>
-                            {/* Links visíveis apenas logado */}
                             <Link to='/categorias' className='hover:text-green-700 transition'>Categorias</Link>
                             <Link to='/produtos' className='hover:text-green-700 transition'>Produtos</Link>
                             <Link to='/imc' className='hover:text-green-700 transition'>Calcule seu IMC</Link>
 
-                            {/* Identificação e Logout */}
                             <div className="flex items-center gap-3 bg-white/60 border border-green-200 rounded-lg px-3 py-1 ml-2">
                                 <span className="text-sm font-semibold text-gray-800">Olá, {usuarioAtual?.nome.split(' ')[0]}</span>
                                 <button

@@ -2,6 +2,7 @@ import { useState, useContext, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [idSelecionado, setIdSelecionado] = useState("1");
@@ -67,6 +68,14 @@ export default function Login() {
           >
             Entrar
           </button>
+
+          <p className="text-center text-sm text-gray-600 mt-4">
+            Ainda não tem conta?{" "}
+            <Link to="/cadastrar" className="text-green-600 hover:underline font-semibold">
+              Cadastre-se aqui
+            </Link>
+          </p>
+
         </form>
       </div>
     </div>
