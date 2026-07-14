@@ -17,6 +17,8 @@ import FormProduto from './components/produto/formproduto/FormProduto'
 import DeletarProduto from './components/deletarproduto/DeletarProduto'
 import ImcPage from './pages/Imc'
 import CadastrarUsuario from './pages/home/CadastrarUsuario'
+import Perfil from './pages/Perfil'
+
 
 function App() {
   return (
@@ -37,7 +39,7 @@ function App() {
 
               {/* Rotas Protegidas (Exigem login) */}
               <Route element={<ProtectedRoute />}>
-
+                <Route path="/perfil" element={<Perfil />} />
                 <Route path="/imc" element={<ImcPage />} />
 
                 {/* Categorias */}
