@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://projeto-integrador-fitness.onrender.com'
 })
 
 export const buscar = async (url: string, setDados: Function, header: Object) => {
@@ -21,4 +21,14 @@ export const atualizar = async (url: string, dados: Object, setDados: Function) 
 
 export const deletar = async (url: string) => {
     await api.delete(url)
+}
+
+export const cadastrarUsuario = async (url: string, dados: Object, setDados: Function) => {
+    const resposta = await api.post(url, dados);
+    setDados(resposta.data);
+}
+
+export const logarUsuario = async (url: string, dados: Object, setDados: Function) => {
+    const resposta = await api.post(url, dados)
+    setDados(resposta.data)
 }

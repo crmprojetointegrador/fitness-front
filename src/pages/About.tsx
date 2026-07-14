@@ -51,7 +51,7 @@ function About() {
 
         <div className="flex flex-wrap justify-center gap-6">
           {integrantes.map((integrante) => (
-            <div key={integrante.id} className="w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[220px]">
+            <div key={integrante.id} className="w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-55">
               <AboutCard
                 nome={integrante.nome}
                 cargo={integrante.cargo}

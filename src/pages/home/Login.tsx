@@ -1,29 +1,36 @@
-import { useState, useContext, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, type FormEvent, type ChangeEvent } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import { logarUsuario } from "../../services/Service";
 import { toast } from "react-toastify";
 
 export default function Login() {
-  const [idSelecionado, setIdSelecionado] = useState("1");
-  const [senha, setSenha] = useState("");
+  const [dadosLogin, setDadosLogin] = useState({ usuario: "", senha: "" });
+  const [carregando, setCarregando] = useState(false);
   const context = useContext(UserContext);
   const navigate = useNavigate();
 
   if (!context) return null;
   const { login } = context;
 
-  function handleLogin(e: FormEvent) {
+  function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+    setDadosLogin({ ...dadosLogin, [e.target.name]: e.target.value });
+  }
+
+  async function handleLogin(e: FormEvent) {
     e.preventDefault();
-
-    if (senha !== "123456") {
-      toast.error("Senha incorreta! Use '123456' para testar.");
-      return;
-    }
-
-    const sucesso = login(Number(idSelecionado));
-    if (sucesso) {
-      toast.success("Login realizado com sucesso!");
-      navigate("/home");
+    setCarregando(true);
+    try {
+      await logarUsuario("/usuarios/logar", dadosLogin, (usuarioRetornado: any) => {
+        login(usuarioRetornado);
+        toast.success("Login realizado com sucesso!");
+        navigate("/home");
+      });
+    } catch (error) {
+      toast.error("E-mail ou senha inválidos!");
+      console.error(error);
+    } finally {
+      setCarregando(false);
     }
   }
 
@@ -37,36 +44,43 @@ export default function Login() {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Selecione seu Usuário</label>
-            <select
-              value={idSelecionado}
-              onChange={(e) => setIdSelecionado(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-gray-50 text-gray-800 font-medium"
-            >
-              <option value="1">Alanis Santos</option>
-              <option value="2">Bruna Mendes</option>
-              <option value="3">Eliane Orlandin</option>
-              <option value="4">Flame Souza</option>
-            </select>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">E-mail</label>
+            <input
+              type="email"
+              name="usuario"
+              placeholder="seu@email.com"
+              value={dadosLogin.usuario}
+              onChange={atualizarEstado}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-green-400"
+            />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Senha de Teste</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Senha</label>
             <input
               type="password"
-              placeholder="Digite 123456"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
+              name="senha"
+              placeholder="Sua senha"
+              value={dadosLogin.senha}
+              onChange={atualizarEstado}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition"
+            disabled={carregando}
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition disabled:opacity-60"
           >
-            Entrar
+            {carregando ? "Entrando..." : "Entrar"}
           </button>
+
+          <p className="text-center text-sm text-gray-600 mt-4">
+            Ainda não tem conta?{" "}
+            <Link to="/cadastrar" className="text-green-600 hover:underline font-semibold">
+              Cadastre-se aqui
+            </Link>
+          </p>
         </form>
       </div>
     </div>

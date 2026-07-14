@@ -16,6 +16,9 @@ import ListarProdutos from "./components/produto/listarprodutos/ListarProdutos"
 import FormProduto from './components/produto/formproduto/FormProduto'
 import DeletarProduto from './components/deletarproduto/DeletarProduto'
 import ImcPage from './pages/Imc'
+import CadastrarUsuario from './pages/home/CadastrarUsuario'
+import Perfil from './pages/Perfil'
+
 
 function App() {
   return (
@@ -30,14 +33,15 @@ function App() {
               {/* Rotas Públicas */}
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
+              <Route path="/cadastrar" element={<CadastrarUsuario />} />
               <Route path="/home" element={<Home />} />
               <Route path="/about" element={<About />} />
 
               {/* Rotas Protegidas (Exigem login) */}
               <Route element={<ProtectedRoute />}>
-             
+                <Route path="/perfil" element={<Perfil />} />
                 <Route path="/imc" element={<ImcPage />} />
-                
+
                 {/* Categorias */}
                 <Route path="/categorias" element={<ListarCategorias />} />
                 <Route path="/cadastrarcategoria" element={<FormCategoria />} />
