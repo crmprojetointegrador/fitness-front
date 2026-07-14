@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoPrincipal from '../../assets/powerplace_logo.png';
+import Logo from '../../assets/logo.png';
 
 function Home() {
     return (
@@ -41,7 +41,6 @@ function Home() {
                             lineHeight: "1.2"
                         }}
                     >
-
                         <span
                             style={{
                                 background: 'linear-gradient(to right, #2d3748, #38a169)',
@@ -53,7 +52,7 @@ function Home() {
                             Olá, Bem-vinde ao
                         </span>
 
-                        <img src={logoPrincipal} alt="PowerPlace" style={{ width: '100%', maxWidth: '350px', marginTop: '1rem' }} />
+                        <img src={Logo} alt="PowerPlace" style={{ width: '300px' }} />
                     </h2>
 
                     <p
