@@ -71,12 +71,12 @@ function ListarCategorias() {
                                 </h3>
                                 <div className="flex">
                                     <Link to={`/editarcategoria/${categoria.id}`}
-                                        className='w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800 flex items-center justify-center py-2'>
+                                        className='w-full text-green-700 bg-green-50 hover:bg-green-100 flex items-center justify-center py-2 font-semibold transition-colors border-r border-green-100'>
                                         <button>Editar</button>
                                     </Link>
 
                                     <Link to={`/categorias/deletar/${categoria.id}`}
-                                        className='text-slate-100 bg-red-400 hover:bg-red-700 w-full flex items-center justify-center'>
+                                        className='text-red-600 bg-red-50 hover:bg-red-100 w-full flex items-center justify-center py-3 font-semibold transition-colors'>
                                         <button>Deletar</button>
                                     </Link>
                                 </div>
