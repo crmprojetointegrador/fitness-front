@@ -7,50 +7,53 @@ interface CardProdutoProps {
 
 function CardProduto({ produto }: CardProdutoProps) {
     return (
-    
-        <div className='border-slate-200 border 
-            flex flex-col rounded overflow-hidden justify-between font-poppins shadow-sm'> 
+        <div className='bg-white/90 backdrop-blur-sm border border-green-200 
+            flex flex-col rounded-2xl overflow-hidden justify-between font-poppins shadow-lg hover:shadow-xl transition-shadow'> 
                 
             <div>
-                <div className="flex w-full bg-[#C9EED9] py-2 px-4 items-center gap-4">
+                <div className="flex w-full bg-green-100/60 border-b border-green-100 py-3 px-4 items-center gap-4">
                     <img src='https://i.imgur.com/pK6vSCy.png'
-                         className='h-12 rounded-full' alt="Foto do usuário" />
-                    <h3 className='text-lg font-bold text-center uppercase text-slate-900'>
+                         className='h-12 rounded-full border-2 border-white shadow-sm' alt="Foto do usuário" />
+                    <h3 className='text-lg font-bold text-center uppercase text-green-900'>
                         {produto.usuario?.nome || 'Usuário Desconhecido'}
                     </h3>
                 </div>
 
-                <div className='p-4 text-slate-900'> 
-                    <h4 className='text-lg font-semibold uppercase text-slate-900'>
+                <div className='p-5 text-slate-800 flex flex-col gap-1'> 
+                    <h4 className='text-xl font-bold uppercase text-slate-900 mb-2'>
                         {produto.nome}
                     </h4>
-                    <p className='mt-2'>
-                      <strong className='font-semibold'>Preço:</strong> 
-                      R$ {produto.preco.toFixed(2).replace('.', ',')}
+                    <p>
+                      <strong className='font-semibold text-green-700'>Preço:</strong> 
+                      <span className='ml-1 text-slate-700'>R$ {produto.preco.toFixed(2).replace('.', ',')}</span>
                     </p>
                     <p>
-                      <strong className='font-semibold'>Marca:</strong> {produto.marca}
+                      <strong className='font-semibold text-green-700'>Marca:</strong> 
+                      <span className='ml-1 text-slate-700'>{produto.marca}</span>
                     </p>
                     <p>
-                      <strong className='font-semibold'>Calorias:</strong> {produto.calorias} kcal
+                      <strong className='font-semibold text-green-700'>Calorias:</strong> 
+                      <span className='ml-1 text-slate-700'>{produto.calorias} kcal</span>
                     </p>
                     <p>
-                      <strong className='font-semibold'>Validade:</strong> {new Date(produto.dataValidade).toLocaleDateString('pt-BR')}
+                      <strong className='font-semibold text-green-700'>Validade:</strong> 
+                      <span className='ml-1 text-slate-700'>{new Date(produto.dataValidade).toLocaleDateString('pt-BR')}</span>
                     </p>
                     <p>
-                      <strong className='font-semibold'>Categoria:</strong> {produto.categoria?.nome || 'Sem Categoria'}
+                      <strong className='font-semibold text-green-700'>Categoria:</strong> 
+                      <span className='ml-1 text-slate-700'>{produto.categoria?.nome || 'Sem Categoria'}</span>
                     </p>
                 </div>
             </div>
 
-            <div className="flex">
-                <Link to={`/editarproduto/${produto.id}`} className='w-full text-slate-900 bg-[#C9EED9] 
-                    hover:bg-[#a0d9b6] flex items-center justify-center py-2'>
-                    <button className='w-full text-center'>Editar</button>
+            <div className="flex border-t border-green-100">
+                <Link to={`/editarproduto/${produto.id}`} className='w-full text-green-700 bg-green-50 
+                    hover:bg-green-100 flex items-center justify-center py-3 font-semibold transition-colors border-r border-green-100'>
+                    Editar
                 </Link>
-                <Link to={`/deletarproduto/${produto.id}`} className='text-white bg-red-400 
-                    hover:bg-red-700 w-full flex items-center justify-center'>
-                    <button className='w-full text-center'>Deletar</button>
+                <Link to={`/deletarproduto/${produto.id}`} className='text-red-600 bg-red-50 
+                    hover:bg-red-100 w-full flex items-center justify-center py-3 font-semibold transition-colors'>
+                    Deletar
                 </Link>
             </div>
         </div>

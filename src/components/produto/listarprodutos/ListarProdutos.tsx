@@ -9,12 +9,10 @@ function ListarProdutos() {
 
     async function buscarProdutos() {
         try {
-            // Busca os dados reais do seu back-end
             await buscar('/produtos', setProdutos, {});
         } catch (error: any) {
             console.error("Erro ao buscar os produtos", error);
         } finally {
-            // Garante que o loading termine mesmo se der erro
             setLoading(false);
         }
     }
@@ -35,10 +33,10 @@ function ListarProdutos() {
     }
 
     return (
-        <>
-            <div className="flex justify-center w-full my-4 bg-[#FFFFFF]">
-                <div className="container flex flex-col mx-2">
-                    {/* Se não houver produtos cadastrados no banco */}
+        <div className="w-full bg-linear-to-r from-[#C9EED9] to-[#FFFFFF] min-h-[80vh] flex flex-col items-center py-8">
+            <div className="container flex flex-col mx-auto px-4 font-poppins">
+                <h1 className="text-4xl text-center mb-8 font-bold text-slate-900">Produtos Cadastrados</h1>
+                {/* Se não houver produtos cadastrados no banco */}
                     {produtos.length === 0 ? (
                         <div className="text-center py-10">
                             <p className="text-gray-500 text-lg">Nenhum produto cadastrado ainda.</p>
@@ -50,9 +48,8 @@ function ListarProdutos() {
                             ))}
                         </div>
                     )}
-                </div>
             </div>
-        </>
+        </div>
     );
 }
 
