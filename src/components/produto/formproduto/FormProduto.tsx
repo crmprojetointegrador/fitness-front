@@ -13,9 +13,11 @@ function FormProduto() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const [categorias, setCategorias] = useState<Categoria[]>([])
+
     const [categoria, setCategoria] = useState<Categoria>({} as Categoria)
 
     const [produto, setProduto] = useState<Produto>({} as Produto)
+
 
     const { id } = useParams<{ id: string }>()
 
@@ -63,7 +65,7 @@ function FormProduto() {
 
         setProduto({
             ...produto,
-            [name]: (name === 'preco' || name === 'calorias') ? Number(value) : value,
+            [name]: (name === 'preco' || name === 'calorias') ? (value === '' ? '' : value) : value,
         });
     }
 
@@ -96,8 +98,9 @@ function FormProduto() {
     }
 
     return (
-        <div className="container flex flex-col mx-auto items-center font-poppins text-slate-900 bg-white">
-            <h1 className="text-4xl text-center my-8 font-bold text-slate-900">
+        <div className="w-full bg-linear-to-r from-[#C9EED9] to-[#FFFFFF] min-h-[80vh] flex flex-col items-center">
+            <div className="container flex flex-col mx-auto items-center font-poppins text-slate-900">
+                <h1 className="text-4xl text-center my-8 font-bold text-slate-900">
                 {id !== undefined ? 'Editar Produto' : 'Cadastrar Produto'}
             </h1>
 
@@ -111,7 +114,7 @@ function FormProduto() {
                         placeholder="Ex: Whey Protein"
                         name="nome"
                         required
-                        className="border-2 border-slate-900 rounded p-2"
+                        className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
                         value={produto.nome}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                     />
@@ -125,7 +128,7 @@ function FormProduto() {
                         placeholder="0.00"
                         name="preco"
                         required
-                        className="border-2 border-slate-900 rounded p-2"
+                        className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
                         value={produto.preco}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                     />
@@ -139,7 +142,7 @@ function FormProduto() {
                             placeholder="0"
                             name="calorias"
                             required
-                            className="border-2 border-slate-900 rounded p-2"
+                            className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
                             value={produto.calorias}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                         />
@@ -151,7 +154,7 @@ function FormProduto() {
                             placeholder="Ex: Growth"
                             name="marca"
                             required
-                            className="border-2 border-slate-900 rounded p-2"
+                            className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
                             value={produto.marca}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                         />
@@ -164,7 +167,7 @@ function FormProduto() {
                         type="date"
                         name="dataValidade"
                         required
-                        className="border-2 border-slate-900 rounded p-2"
+                        className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
                         value={produto.dataValidade ? produto.dataValidade.split('T')[0] : ''}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                     />
@@ -172,7 +175,7 @@ function FormProduto() {
 
                 <div className="flex flex-col gap-2">
                     <p className="font-semibold text-gray-800">Categoria do Produto</p>
-                    <select name="categoria" id="categoria" className='border-2 p-2 border-slate-900 rounded'
+                    <select name="categoria" id="categoria" className='border-2 p-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded'
                         onChange={(e) => buscarCategoriaPorId(e.currentTarget.value)}
                         value={produto.categoria?.id || ""}
                     >
@@ -187,8 +190,8 @@ function FormProduto() {
 
                 <button
                     type='submit'
-                    className='rounded disabled:bg-slate-200 disabled:text-slate-500 bg-[#3B8C5A] hover:bg-[#2F6B3A]
-                               text-white font-bold w-1/2 mx-auto py-2 mt-4 flex justify-center transition-all'
+                    className='rounded-lg disabled:bg-green-600/50 disabled:text-white/80 bg-green-600 hover:bg-green-700
+                               text-white font-bold w-1/2 mx-auto py-2 mt-4 flex justify-center transition-all cursor-pointer disabled:cursor-not-allowed'
                     disabled={!produto.categoria?.id}
                 >
                     {isLoading ?
@@ -200,6 +203,7 @@ function FormProduto() {
                     }
                 </button>
             </form>
+            </div>
         </div>
     );
 }

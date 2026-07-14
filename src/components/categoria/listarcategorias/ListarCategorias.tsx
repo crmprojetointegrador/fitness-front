@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ToastAlerta } from '../../../utils/ToastAlerta'
 import { buscar } from '../../../services/Service'
 
+
 interface Categoria {
     id: number;
     descricao: string;
@@ -13,6 +14,7 @@ function ListarCategorias() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
         buscarcategorias()
     }, [categorias.length])
 
@@ -26,6 +28,7 @@ function ListarCategorias() {
             setLoading(false)
         }
     }
+
 
     if (loading) {
         return (
