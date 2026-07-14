@@ -1,8 +1,9 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useContext, useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
 import { ToastAlerta } from "../../../utils/ToastAlerta";
+import { UserContext } from "../../../context/UserContext";
 
 import type { Produto } from "../../../models/Produto";
 import type { Categoria } from "../../../models/Categoria";
@@ -11,6 +12,9 @@ function FormProduto() {
 
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const context = useContext(UserContext)
+    const usuarioAtual = context?.usuarioAtual
 
     const [categorias, setCategorias] = useState<Categoria[]>([])
 
@@ -86,7 +90,11 @@ function FormProduto() {
             }
         } else {
             try {
-                await cadastrar(`/produtos`, produto, setProduto)
+                const novoProduto: Produto = {
+                    ...produto,
+                    usuario: usuarioAtual ?? null,
+                }
+                await cadastrar(`/produtos`, novoProduto, setProduto)
                 ToastAlerta('Produto cadastrado com sucesso', 'sucesso');
             } catch (error: any) {
                 ToastAlerta('Erro ao cadastrar o Produto', 'erro');
@@ -101,108 +109,108 @@ function FormProduto() {
         <div className="w-full bg-linear-to-r from-[#C9EED9] to-[#FFFFFF] min-h-[80vh] flex flex-col items-center">
             <div className="container flex flex-col mx-auto items-center font-poppins text-slate-900">
                 <h1 className="text-4xl text-center my-8 font-bold text-slate-900">
-                {id !== undefined ? 'Editar Produto' : 'Cadastrar Produto'}
-            </h1>
+                    {id !== undefined ? 'Editar Produto' : 'Cadastrar Produto'}
+                </h1>
 
-            <form className="flex flex-col w-1/2 gap-4 mb-8"
-                onSubmit={gerarNovoProduto}>
+                <form className="flex flex-col w-1/2 gap-4 mb-8"
+                    onSubmit={gerarNovoProduto}>
 
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="nome" className="font-semibold text-gray-800">Nome do Produto</label>
-                    <input
-                        type="text"
-                        placeholder="Ex: Whey Protein"
-                        name="nome"
-                        required
-                        className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
-                        value={produto.nome}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="preco" className="font-semibold text-gray-800">Preço (R$)</label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        placeholder="0.00"
-                        name="preco"
-                        required
-                        className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
-                        value={produto.preco}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-                    />
-                </div>
-
-                <div className="flex gap-4 w-full">
-                    <div className="flex flex-col gap-2 w-1/2">
-                        <label htmlFor="calorias" className="font-semibold text-gray-800">Calorias (kcal)</label>
-                        <input
-                            type="number"
-                            placeholder="0"
-                            name="calorias"
-                            required
-                            className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
-                            value={produto.calorias}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2 w-1/2">
-                        <label htmlFor="marca" className="font-semibold text-gray-800">Marca</label>
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="nome" className="font-semibold text-gray-800">Nome do Produto</label>
                         <input
                             type="text"
-                            placeholder="Ex: Growth"
-                            name="marca"
+                            placeholder="Ex: Whey Protein"
+                            name="nome"
                             required
                             className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
-                            value={produto.marca}
+                            value={produto.nome}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                         />
                     </div>
-                </div>
 
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="dataValidade" className="font-semibold text-gray-800">Data de Validade</label>
-                    <input
-                        type="date"
-                        name="dataValidade"
-                        required
-                        className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
-                        value={produto.dataValidade ? produto.dataValidade.split('T')[0] : ''}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
-                    />
-                </div>
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="preco" className="font-semibold text-gray-800">Preço (R$)</label>
+                        <input
+                            type="number"
+                            step="0.01"
+                            placeholder="0.00"
+                            name="preco"
+                            required
+                            className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
+                            value={produto.preco}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+                        />
+                    </div>
 
-                <div className="flex flex-col gap-2">
-                    <p className="font-semibold text-gray-800">Categoria do Produto</p>
-                    <select name="categoria" id="categoria" className='border-2 p-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded'
-                        onChange={(e) => buscarCategoriaPorId(e.currentTarget.value)}
-                        value={produto.categoria?.id || ""}
-                    >
-                        <option value="" disabled>Selecione uma Categoria</option>
+                    <div className="flex gap-4 w-full">
+                        <div className="flex flex-col gap-2 w-1/2">
+                            <label htmlFor="calorias" className="font-semibold text-gray-800">Calorias (kcal)</label>
+                            <input
+                                type="number"
+                                placeholder="0"
+                                name="calorias"
+                                required
+                                className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
+                                value={produto.calorias}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+                            />
+                        </div>
+                        <div className="flex flex-col gap-2 w-1/2">
+                            <label htmlFor="marca" className="font-semibold text-gray-800">Marca</label>
+                            <input
+                                type="text"
+                                placeholder="Ex: Growth"
+                                name="marca"
+                                required
+                                className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
+                                value={produto.marca}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+                            />
+                        </div>
+                    </div>
 
-                        {categorias.map((cat) => (
-                            <option key={cat.id} value={cat.id}>{cat.descricao}</option>
-                        ))}
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="dataValidade" className="font-semibold text-gray-800">Data de Validade</label>
+                        <input
+                            type="date"
+                            name="dataValidade"
+                            required
+                            className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
+                            value={produto.dataValidade ? produto.dataValidade.split('T')[0] : ''}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
+                        />
+                    </div>
 
-                    </select>
-                </div>
+                    <div className="flex flex-col gap-2">
+                        <p className="font-semibold text-gray-800">Categoria do Produto</p>
+                        <select name="categoria" id="categoria" className='border-2 p-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded'
+                            onChange={(e) => buscarCategoriaPorId(e.currentTarget.value)}
+                            value={produto.categoria?.id || ""}
+                        >
+                            <option value="" disabled>Selecione uma Categoria</option>
 
-                <button
-                    type='submit'
-                    className='rounded-lg disabled:bg-green-600/50 disabled:text-white/80 bg-green-600 hover:bg-green-700
+                            {categorias.map((cat) => (
+                                <option key={cat.id} value={cat.id}>{cat.descricao}</option>
+                            ))}
+
+                        </select>
+                    </div>
+
+                    <button
+                        type='submit'
+                        className='rounded-lg disabled:bg-green-600/50 disabled:text-white/80 bg-green-600 hover:bg-green-700
                                text-white font-bold w-1/2 mx-auto py-2 mt-4 flex justify-center transition-all cursor-pointer disabled:cursor-not-allowed'
-                    disabled={!produto.categoria?.id}
-                >
-                    {isLoading ?
-                        <ClipLoader
-                            color="#ffffff"
-                            size={24}
-                        /> :
-                        <span>{id === undefined ? 'Cadastrar' : 'Atualizar'}</span>
-                    }
-                </button>
-            </form>
+                        disabled={!produto.categoria?.id}
+                    >
+                        {isLoading ?
+                            <ClipLoader
+                                color="#ffffff"
+                                size={24}
+                            /> :
+                            <span>{id === undefined ? 'Cadastrar' : 'Atualizar'}</span>
+                        }
+                    </button>
+                </form>
             </div>
         </div>
     );
