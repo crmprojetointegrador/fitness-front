@@ -61,7 +61,7 @@ export default function Perfil() {
     if (!usuario) return;
     setExcluindo(true);
     try {
-      await deletar(`/usuarios/${id}`);
+      await deletar(`/usuarios/${usuario.id}`);
       ToastAlerta("Conta excluída com sucesso!", "sucesso");
       logout();
     } catch (error) {
