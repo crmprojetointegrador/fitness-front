@@ -2,6 +2,8 @@ import { useContext, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from '../../context/UserContext';
 
+import logo from '../../assets/logo.png';
+
 function Navbar() {
     const context = useContext(UserContext);
     const navigate = useNavigate();
@@ -20,11 +22,14 @@ function Navbar() {
     };
 
     return (
-        // Mantemos 'relative' para que o menu flutuante se alinhe perfeitamente logo abaixo
         <div className="w-full bg-linear-to-r from-[#C9EED9] to-[#FFFFFF] flex flex-col px-8 py-4 shadow-md relative z-50">
             <div className="w-full flex justify-between items-center">
-                <Link to='/home' onClick={fecharMenu} className="text-2xl md:text-3xl font-bold text-gray-800">
-                    🏋️ PowerPlace 🏋️
+                <Link to='/home' onClick={fecharMenu} className="flex items-center">
+                    <img
+                        src={logo}
+                        alt="PowerPlace Logo"
+                        className="h-8 md:h-10 w-auto object-contain"
+                    />
                 </Link>
 
                 {/* Botão Sanduíche */}
