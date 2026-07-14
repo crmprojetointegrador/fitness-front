@@ -27,6 +27,14 @@ Este projeto foi construído utilizando as seguintes tecnologias e bibliotecas:
 * **Gerenciamento de Categorias:** Listagem, cadastro, edição e exclusão de categorias (ex: Suplementos, Acessórios, Roupas Fitness) para organizar os itens de forma eficiente.
 * **Gerenciamento de Produtos (CRUD):** Listagem, cadastro, edição e exclusão de produtos fitness, com propriedades como nome, marca, preço, calorias e data de validade.
 
+## 🔮 Próximos Passos (O Futuro do PowerPlace)
+
+O futuro do PowerPlace está estruturado para evoluir a plataforma de uma ferramenta de registro para um ecossistema de engajamento contínuo e monitoramento inteligente, dividido em três pilares principais:
+
+* **Fase 1 - Engajamento (Gamificação/Streaks):** Implementação de um contador de dias ativos, inspirado em plataformas como Duolingo e GymRats. O objetivo é criar um incentivo visual que motive a constância do usuário tanto nos treinos quanto na utilização diária da plataforma.
+* **Fase 2 - Analytics (Dashboards de Evolução):** Criação de visualizações gráficas para o acompanhamento do progresso de peso e IMC ao longo do tempo. Esta funcionalidade utilizará os dados históricos coletados pela calculadora de IMC já existente para gerar insights visuais claros sobre a evolução física do usuário.
+* **Fase 3 - Retenção (Metas e Conquistas):** Implementação de um sistema de gamificação com emblemas (badges) e recompensas visuais. O sistema celebrará marcos específicos da jornada do usuário, como o "Primeiro Produto Cadastrado" ou a manutenção de um histórico consistente de "7 Dias Seguidos" de atividade.
+
 ## 🎨 Design e Identidade Visual
 
 A interface possui um design moderno e responsivo, utilizando *glassmorphism* (efeitos de desfoque) e uma paleta focada em energia e saúde:
