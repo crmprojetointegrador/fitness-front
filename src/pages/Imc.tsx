@@ -41,7 +41,7 @@ export default function ImcPage() {
 
   const classificacao = resultado !== null ? classificarImc(resultado) : null;
 
-  const [loading, setLoading] = useState(true);
+  const [loading] = useState(true);
   if (loading) {
         return (
             <div className="flex justify-center items-center min-h-[80vh]"
