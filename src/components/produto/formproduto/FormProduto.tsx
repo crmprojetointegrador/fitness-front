@@ -13,18 +13,11 @@ function FormProduto() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const [categorias, setCategorias] = useState<Categoria[]>([])
-    const [categoria, setCategoria] = useState<Categoria>({ id: 0, nome: '', descricao: '' })
 
-    const [produto, setProduto] = useState<Produto>({
-        id: 0,
-        nome: '',
-        dataValidade: '',
-        preco: '' as unknown as number,
-        calorias: '' as unknown as number,
-        marca: '',
-        categoria: null,
-        usuario: null
-    })
+    const [categoria, setCategoria] = useState<Categoria>({} as Categoria)
+
+    const [produto, setProduto] = useState<Produto>({} as Produto)
+
 
     const { id } = useParams<{ id: string }>()
 
@@ -86,7 +79,7 @@ function FormProduto() {
 
         if (id !== undefined) {
             try {
-                await atualizar(`/produtos/${id}`, produto, setProduto);
+                await atualizar(`/produtos`, produto, setProduto);
                 ToastAlerta('Produto atualizado com sucesso', 'sucesso')
             } catch (error: any) {
                 ToastAlerta('Erro ao atualizar o Produto', 'erro')
@@ -103,8 +96,6 @@ function FormProduto() {
         setIsLoading(false)
         retornar()
     }
-
-    const carregandoCategoria = categoria.nome === '';
 
     return (
         <div className="w-full bg-linear-to-r from-[#C9EED9] to-[#FFFFFF] min-h-[80vh] flex flex-col items-center">
@@ -191,7 +182,7 @@ function FormProduto() {
                         <option value="" disabled>Selecione uma Categoria</option>
 
                         {categorias.map((cat) => (
-                            <option key={cat.id} value={cat.id}>{cat.nome}</option>
+                            <option key={cat.id} value={cat.id}>{cat.descricao}</option>
                         ))}
 
                     </select>

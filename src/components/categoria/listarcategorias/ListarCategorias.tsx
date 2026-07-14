@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { buscar } from '../../../services/Service';
+import { ToastAlerta } from '../../../utils/ToastAlerta'
+import { buscar } from '../../../services/Service'
+
 
 interface Categoria {
     id: number;
@@ -12,22 +14,21 @@ function ListarCategorias() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const carregarCategorias = async () => {
-            try {
-                setLoading(true);
-                await buscar('/categorias', setCategorias, {});
-            } catch (error) {
-                console.error('Erro ao carregar categorias:', error);
-                alert('Erro ao carregar categorias. Tente novamente.');
-            } finally {
-                setLoading(false);
-            }
-        };
 
-        carregarCategorias();
+        buscarcategorias()
+    }, [categorias.length])
 
-        
-    }, []);
+    async function buscarcategorias() {
+        try {
+            setLoading(true)
+            await buscar('/categorias', setCategorias, { headers: {} })
+        } catch (error: any) {
+            ToastAlerta('Erro ao buscar a categoria', 'erro')
+        } finally {
+            setLoading(false)
+        }
+    }
+
 
     if (loading) {
         return (
@@ -68,10 +69,40 @@ function ListarCategorias() {
                                 <h3 className="text-xl font-semibold text-gray-800">
                                     {categoria.descricao}
                                 </h3>
+                                <div className="flex">
+                                    <Link to={`/editarcategoria/${categoria.id}`}
+                                        className='w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800 flex items-center justify-center py-2'>
+                                        <button>Editar</button>
+                                    </Link>
+
+                                    <Link to={`/categorias/deletar/${categoria.id}`}
+                                        className='text-slate-100 bg-red-400 hover:bg-red-700 w-full flex items-center justify-center'>
+                                        <button>Deletar</button>
+                                    </Link>
+                                </div>
                             </div>
                         ))}
                     </div>
                 )}
+
+                <div className="text-center mt-8">
+                    <Link
+                        to="/cadastrarcategoria"
+                        style={{
+                            borderRadius: "0.5rem",
+                            backgroundColor: "#38a169",
+                            color: "white",
+                            border: "none",
+                            padding: "0.75rem 2rem",
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            fontSize: "1.1rem"
+                        }}
+                    >
+                        Cadastrar Nova Categoria
+                    </Link>
+                </div>
+
 
                 <div className="text-center mt-8">
                     <Link
