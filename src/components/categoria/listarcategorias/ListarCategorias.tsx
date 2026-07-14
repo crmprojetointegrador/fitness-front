@@ -20,7 +20,6 @@ function ListarCategorias() {
 
     async function buscarcategorias() {
         try {
-            setLoading(true)
             await buscar('/categorias', setCategorias, { headers: {} })
         } catch (error: any) {
             ToastAlerta('Erro ao buscar a categoria', 'erro')

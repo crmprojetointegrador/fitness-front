@@ -28,7 +28,7 @@ function ListarProdutos() {
                 className="flex justify-center items-center min-h-[80vh]"
                 style={{ background: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
             >
-                <p className="text-gray-600 font-medium">Carregando a lista de produtos...</p>
+                <p className="text-gray-600">Carregando a lista de produtos...</p>
             </div>
         );
     }
@@ -66,9 +66,19 @@ function ListarProdutos() {
                     >
                         Cadastrar Novo Produto
                     </Link>
+                    
+                    <div className="text-center mt-8">
+                    <Link
+                        to="/"
+                        className="text-green-700 hover:underline"
+                    >
+                        ← Voltar para Home
+                    </Link>
+                </div>
+                
                 </div>
 
-                </div>
+            </div>
 
             </div>
         
