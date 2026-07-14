@@ -2,7 +2,7 @@ import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { atualizar, buscar, cadastrar } from '../../../services/Service'
 import type { Categoria } from '../../../models/Categoria'
-import { RotatingLines } from 'react-loader-spinner'
+import { ClipLoader } from "react-spinners";
 import { ToastAlerta } from '../../../utils/ToastAlerta'
 
 function FormCategoria() {
@@ -10,11 +10,7 @@ function FormCategoria() {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const [categoria, setCategoria] = useState<Categoria>({
-        id: 0,
-        nome: '',
-        descricao: ''
-    })
+    const [categoria, setCategoria] = useState<Categoria>({} as Categoria)
 
     const { id } = useParams<{ id: string }>()
 
@@ -74,18 +70,7 @@ function FormCategoria() {
             </h1>
 
             <form className="flex flex-col w-1/2 gap-4" onSubmit={gerarNovaCategoria}>
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="nome">Nome da Categoria</label>
-                    <input
-                        type="text"
-                        placeholder="Nome"
-                        name="nome"
-                        value={categoria.nome}
-                        onChange={atualizarEstado}
-                        required
-                        className="border-2 border-slate-700 rounded p-2"
-                    />
-                </div>
+
                 <div className="flex flex-col gap-2">
                     <label htmlFor="descricao">Descrição</label>
                     <input
@@ -93,7 +78,7 @@ function FormCategoria() {
                         placeholder="Descrição"
                         name="descricao"
                         value={categoria.descricao}
-                        onChange={atualizarEstado}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                         required
                         className="border-2 border-slate-700 rounded p-2"
                     />
@@ -103,15 +88,10 @@ function FormCategoria() {
                     className="rounded bg-[#3B8C5A] hover:bg-[#2F6B3A]
                                 text-white font-bold w-1/2 mx-auto py-2 flex justify-center"
                 >
-                    {isLoading ? (
-                        <RotatingLines
-                            strokeColor="white"
-                            strokeWidth="5"
-                            animationDuration="0.75"
-                            width="24"
-                            visible={true}
-                        />
-                    ) : (
+                    {isLoading ?  <ClipLoader
+                            color="#ffffff"
+                            size={24}
+                        /> : (
                         <span>{id === undefined ? 'Cadastrar' : 'Atualizar'}</span>
                     )}
                 </button>

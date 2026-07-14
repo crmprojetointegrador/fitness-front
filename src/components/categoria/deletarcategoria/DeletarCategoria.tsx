@@ -15,12 +15,7 @@ function DeletarCategoria() {
 
     async function buscarPorId(id: string) {
         try {
-            const categoriaEncontrada = await buscar(`/categorias/${id}`, setCategoria, { headers: {} })
-            if (categoria) {
-                setCategoria(categoria)
-            } else {
-                setCategoria(null) // Define como null se não encontrar
-            }
+           await buscar(`/categorias/${id}`, setCategoria, { headers: {} })
         } catch (error: any) {
             ToastAlerta('Erro ao buscar a categoria', 'erro')
         }
@@ -68,7 +63,6 @@ function DeletarCategoria() {
                 <div className="p-4">
                     {categoria ? (
                         <>
-                            <p className='text-xl h-full'>{categoria.nome}</p>
                             <p>{categoria.descricao}</p>
                         </>
                     ) : (

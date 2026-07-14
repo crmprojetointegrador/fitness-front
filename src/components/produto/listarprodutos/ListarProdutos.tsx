@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import CardProduto from '../cardproduto/CardProduto';
 import type { Produto } from '../../../models/Produto';
 import { buscar } from '../../../services/Service';
+import { Link } from 'react-router-dom';
 
 function ListarProdutos() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -50,6 +51,24 @@ function ListarProdutos() {
                             ))}
                         </div>
                     )}
+                    <div className="text-center mt-8">
+                    <Link
+                        to="/cadastrarproduto"
+                        style={{
+                            borderRadius: "0.5rem",
+                            backgroundColor: "#38a169",
+                            color: "white",
+                            border: "none",
+                            padding: "0.75rem 2rem",
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            fontSize: "1.1rem"
+                        }}
+                    >
+                        Cadastrar Novo Produto
+                    </Link>
+                </div>
+
                 </div>
             </div>
         </>

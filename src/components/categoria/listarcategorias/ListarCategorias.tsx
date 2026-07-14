@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ToastAlerta } from '../../../utils/ToastAlerta'
+import { buscar } from '../../../services/Service'
 
 interface Categoria {
     id: number;
@@ -11,31 +13,29 @@ function ListarCategorias() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Dados mockados de uma loja fitness
-        const dadosMock: Categoria[] = [
-            { id: 1, descricao: 'Barras de Cereal - Energia para o treino' },
-            { id: 2, descricao: 'Materiais de Exercício - Colchonetes, halteres e mais' },
-            { id: 3, descricao: 'Suplementos - Whey, creatina e vitaminas' },
-            { id: 4, descricao: 'Roupas Fitness - Leggings, tops e camisas' },
-            { id: 5, descricao: 'Acessórios - Garrafas, luvas e faixas' },
-            { id: 6, descricao: 'Alimentos Saudáveis - Oleaginosas, frutas secas' },
-        ];
+        buscarcategorias()
+    }, [categorias.length])
 
-        setTimeout(() => {
-            setCategorias(dadosMock);
-            setLoading(false);
-        }, 500);
-    }, []);
+    async function buscarcategorias() {
+        try {
+            setLoading(true)
+            await buscar('/categorias', setCategorias, { headers: {} })
+        } catch (error: any) {
+            ToastAlerta('Erro ao buscar a categoria', 'erro')
+        } finally {
+            setLoading(false)
+        }
+    }
 
     if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[80vh]"
-        style={{ background: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
-      >
-        <p className="text-gray-600">Carregando categorias cadastradas...</p>
-      </div>
-    );
-  }
+        return (
+            <div className="flex justify-center items-center min-h-[80vh]"
+                style={{ background: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
+            >
+                <p className="text-gray-600">Carregando categorias cadastradas...</p>
+            </div>
+        );
+    }
 
     return (
         <div
@@ -47,7 +47,7 @@ function ListarCategorias() {
         >
             <div className="container mx-auto">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-                     <span style={{ color: "#2d3748" }}>🏋️ Categorias de Produtos</span>
+                    <span style={{ color: "#2d3748" }}>🏋️ Categorias de Produtos</span>
                 </h2>
 
                 <p className="text-center text-gray-600 mb-8">
@@ -66,10 +66,40 @@ function ListarCategorias() {
                                 <h3 className="text-xl font-semibold text-gray-800">
                                     {categoria.descricao}
                                 </h3>
+                                <div className="flex">
+                                    <Link to={`/editarcategoria/${categoria.id}`}
+                                        className='w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800 flex items-center justify-center py-2'>
+                                        <button>Editar</button>
+                                    </Link>
+
+                                    <Link to={`/categorias/deletar/${categoria.id}`}
+                                        className='text-slate-100 bg-red-400 hover:bg-red-700 w-full flex items-center justify-center'>
+                                        <button>Deletar</button>
+                                    </Link>
+                                </div>
                             </div>
                         ))}
                     </div>
                 )}
+
+                <div className="text-center mt-8">
+                    <Link
+                        to="/cadastrarcategoria"
+                        style={{
+                            borderRadius: "0.5rem",
+                            backgroundColor: "#38a169",
+                            color: "white",
+                            border: "none",
+                            padding: "0.75rem 2rem",
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            fontSize: "1.1rem"
+                        }}
+                    >
+                        Cadastrar Nova Categoria
+                    </Link>
+                </div>
+
 
                 <div className="text-center mt-8">
                     <Link
