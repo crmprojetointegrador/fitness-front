@@ -41,6 +41,17 @@ export default function ImcPage() {
 
   const classificacao = resultado !== null ? classificarImc(resultado) : null;
 
+  const [loading, setLoading] = useState(true);
+  if (loading) {
+        return (
+            <div className="flex justify-center items-center min-h-[80vh]"
+                style={{ background: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
+            >
+                <p className="text-gray-600">Carregando calculadora de IMC...</p>
+            </div>
+        );
+    }
+
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4"
