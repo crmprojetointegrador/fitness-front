@@ -31,8 +31,12 @@ export default function CadastrarUsuario() {
       await cadastrarUsuario("/usuarios/cadastrar", formData, setFormData);
       toast.success("Usuária cadastrada com sucesso!");
       navigate("/login");
-    } catch (error) {
-      toast.error("Erro ao cadastrar a usuária. Verifique os dados!");
+    } catch (error: any) {
+      if (error?.response?.status === 409) {
+        toast.error("Este e-mail já está cadastrado. Tente fazer login.");
+      } else {
+        toast.error("Erro ao cadastrar a usuária. Verifique os dados!");
+      }
       console.error(error);
     }
   }
@@ -43,9 +47,9 @@ export default function CadastrarUsuario() {
       style={{ backgroundImage: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
     >
       <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full border border-gray-100">
-        <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">Cadastrar Dev</h2>
+        <h2 className="text-2xl font-bold text-gray-800 text-center mb-2">Cadastrar Usuário</h2>
         <p className="text-gray-500 text-sm text-center mb-6">
-          Adicione uma nova integrante à equipe do PowerPlace.
+          Seja um novo integrante no PowerPlace.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
