@@ -49,39 +49,41 @@ function DeletarCategoria() {
     }
 
     return (
-        <div className='container w-1/3 mx-auto'>
-            <h1 className='text-4xl text-center my-4'>Deletar Categoria</h1>
+        <div className="w-full bg-linear-to-r from-[#C9EED9] to-[#FFFFFF] min-h-[80vh] flex flex-col items-center justify-center py-8">
+            <h1 className='text-4xl text-center mb-4 font-bold text-slate-900'>Deletar Categoria</h1>
 
-            <p className='text-center font-semibold mb-4'>
+            <p className='text-center font-semibold text-slate-700 mb-2'>
                 Você tem certeza de que deseja apagar a categoria a seguir?
             </p>
+            <p className='text-center text-sm font-semibold text-red-600 bg-red-50 p-2 rounded-lg max-w-md w-full border border-red-200 mb-6'>
+                ⚠️ Atenção: Ao deletar esta categoria, todos os produtos vinculados a ela também serão deletados permanentemente.
+            </p>
 
-            <div className='border flex flex-col rounded-2xl overflow-hidden justify-between'>
-                <header className='py-2 px-6 bg-[#3B8C5A] text-white font-bold text-2xl'>
+            <div className='w-full max-w-md bg-white rounded-lg shadow-md border border-gray-200 flex flex-col overflow-hidden font-poppins'>
+                <header className='py-3 px-6 bg-[#3B8C5A] text-white font-bold text-2xl text-center'>
                     Categoria
                 </header>
-                <div className="p-4">
+                <div className="p-6">
                     {categoria ? (
-                        <>
-                            <p>{categoria.descricao}</p>
-                        </>
+                        <h3 className="text-2xl font-semibold text-gray-800 text-center">
+                            {categoria.descricao}
+                        </h3>
                     ) : (
-                        <p className='text-red-500'>Categoria não encontrada</p>
+                        <p className='text-red-500 text-center'>Categoria não encontrada</p>
                     )}
                 </div>
-                <div className="flex">
+                <div className="flex border-t border-gray-100">
                     <button
                         onClick={retornar}
-                        className='text-slate-100 bg-red-400 hover:bg-red-600 w-full py-2'>
+                        className='w-full text-green-700 bg-green-50 hover:bg-green-100 flex items-center justify-center py-3 font-semibold transition-colors border-r border-green-100'>
                         Não
                     </button>
                     <button
                         onClick={deletarCategoria}
-                        className='w-full text-slate-100 bg-[#3B8C5A] hover:bg-[#2F6B3A]
-                        flex items-center justify-center'>
+                        className='text-red-600 bg-red-50 hover:bg-red-100 w-full flex items-center justify-center py-3 font-semibold transition-colors'>
                         {isLoading ? (
                             <RotatingLines
-                                strokeColor="white"
+                                strokeColor="#dc2626"
                                 strokeWidth="5"
                                 animationDuration="0.75"
                                 width="24"
