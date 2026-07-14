@@ -62,7 +62,7 @@ function Home() {
                             color: "#4a5568"
                         }}
                     >
-                        Onde até comprar é pensado para ser é eficiente.
+                        Onde até comprar é pensado para ser eficiente.
                     </p>
 
                     <Link
