@@ -71,7 +71,7 @@ function ListarProdutos() {
                 </div>
 
             </div>
-        </div>
+        
     );
 }
 
