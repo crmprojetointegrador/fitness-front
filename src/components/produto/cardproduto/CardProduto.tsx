@@ -12,8 +12,11 @@ function CardProduto({ produto }: CardProdutoProps) {
 
             <div>
                 <div className="flex w-full bg-green-100/60 border-b border-green-100 py-3 px-4 items-center gap-4">
-                    <img src='https://i.imgur.com/pK6vSCy.png'
-                        className='h-12 rounded-full border-2 border-white shadow-sm' alt="Foto do usuário" />
+                    <img
+                        src={produto.usuario?.foto || 'https://i.imgur.com/pK6vSCy.png'}
+                        className='h-12 w-12 rounded-full border-2 border-white shadow-sm object-cover'
+                        alt="Foto do usuário"
+                    />
                     <h3 className='text-lg font-bold text-center uppercase text-green-900'>
                         {produto.usuario?.nome || 'Usuário Desconhecido'}
                     </h3>
@@ -29,11 +32,11 @@ function CardProduto({ produto }: CardProdutoProps) {
                     </p>
                     <p>
                         <strong className='font-semibold text-green-700'>Marca:</strong>
-                        <span className='ml-1 text-slate-700'>{produto.marca}</span>
+                        <span className='ml-1 text-slate-700'>{produto.marca || 'Não informada'}</span>
                     </p>
                     <p>
                         <strong className='font-semibold text-green-700'>Calorias:</strong>
-                        <span className='ml-1 text-slate-700'>{produto.calorias} kcal</span>
+                        <span className='ml-1 text-slate-700'>{produto.calorias ? `${produto.calorias} kcal` : 'Não informada'}</span>
                     </p>
                     <p>
                         <strong className='font-semibold text-green-700'>Validade:</strong>
@@ -43,7 +46,9 @@ function CardProduto({ produto }: CardProdutoProps) {
                     </p>
                     <p>
                         <strong className='font-semibold text-green-700'>Categoria:</strong>
-                        <span className='ml-1 text-slate-700'>{produto.categoria?.descricao || 'Sem Categoria'}</span>
+                        <span className='ml-1 text-slate-700'>
+                            {produto.categoria?.descricao || (produto.categoria?.id ? `Categoria #${produto.categoria.id}` : 'Sem Categoria')}
+                        </span>
                     </p>
                 </div>
             </div>
@@ -62,4 +67,4 @@ function CardProduto({ produto }: CardProdutoProps) {
     )
 }
 
-export default CardProduto
+export default CardProduto;
