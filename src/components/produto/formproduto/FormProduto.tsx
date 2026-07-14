@@ -20,8 +20,16 @@ function FormProduto() {
 
     const [categoria, setCategoria] = useState<Categoria>({} as Categoria)
 
-    const [produto, setProduto] = useState<Produto>({} as Produto)
-
+    const [produto, setProduto] = useState<Produto>({
+        id: 0,
+        nome: "",
+        preco: 0,
+        calorias: 0,
+        marca: "",
+        dataValidade: "",
+        categoria: null as any,
+        usuario: null as any
+    })
 
     const { id } = useParams<{ id: string }>()
 
@@ -58,10 +66,12 @@ function FormProduto() {
     }, [id])
 
     useEffect(() => {
-        setProduto({
-            ...produto,
-            categoria: categoria,
-        })
+        if (categoria.id) {
+            setProduto((produtoAtual) => ({
+                ...produtoAtual,
+                categoria: categoria,
+            }))
+        }
     }, [categoria])
 
     function atualizarEstado(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -81,20 +91,48 @@ function FormProduto() {
         e.preventDefault()
         setIsLoading(true)
 
+        const selectCategoria = document.getElementById('categoria') as HTMLSelectElement;
+        const categoriaIdSelecionado = selectCategoria ? selectCategoria.value : "";
+
+        const produtoFormatado = {
+            ...produto,
+            id: id !== undefined ? Number(id) : undefined,
+
+            preco: produto.preco ? parseFloat(String(produto.preco)) : 0.0,
+
+            calorias: (produto.calorias && String(produto.calorias).trim() !== "")
+                ? parseInt(String(produto.calorias), 10)
+                : null,
+
+            marca: (produto.marca && produto.marca.trim() !== "") ? produto.marca : null,
+
+            dataValidade: (produto.dataValidade && String(produto.dataValidade).trim() !== "")
+                ? produto.dataValidade
+                : null,
+
+            categoria: categoriaIdSelecionado
+                ? { id: parseInt(categoriaIdSelecionado, 10) }
+                : null,
+
+            usuario: usuarioAtual?.id ? { id: usuarioAtual.id } : null,
+        }
+
+        if (!produtoFormatado.categoria) {
+            ToastAlerta('Selecione uma categoria válida para o produto!', 'erro');
+            setIsLoading(false);
+            return;
+        }
+
         if (id !== undefined) {
             try {
-                await atualizar(`/produtos`, produto, setProduto);
+                await atualizar(`/produtos`, { ...produtoFormatado, id: Number(id) }, setProduto);
                 ToastAlerta('Produto atualizado com sucesso', 'sucesso')
             } catch (error: any) {
                 ToastAlerta('Erro ao atualizar o Produto', 'erro')
             }
         } else {
             try {
-                const novoProduto: Produto = {
-                    ...produto,
-                    usuario: usuarioAtual ?? null,
-                }
-                await cadastrar(`/produtos`, novoProduto, setProduto)
+                await cadastrar(`/produtos`, produtoFormatado, setProduto)
                 ToastAlerta('Produto cadastrado com sucesso', 'sucesso');
             } catch (error: any) {
                 ToastAlerta('Erro ao cadastrar o Produto', 'erro');
@@ -144,24 +182,22 @@ function FormProduto() {
 
                     <div className="flex gap-4 w-full">
                         <div className="flex flex-col gap-2 w-1/2">
-                            <label htmlFor="calorias" className="font-semibold text-gray-800">Calorias (kcal)</label>
+                            <label htmlFor="calorias" className="font-semibold text-gray-800">Calorias (kcal) (Opcional)</label>
                             <input
                                 type="number"
                                 placeholder="0"
                                 name="calorias"
-                                required
                                 className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
                                 value={produto.calorias}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
                             />
                         </div>
                         <div className="flex flex-col gap-2 w-1/2">
-                            <label htmlFor="marca" className="font-semibold text-gray-800">Marca</label>
+                            <label htmlFor="marca" className="font-semibold text-gray-800">Marca (Opcional)</label>
                             <input
                                 type="text"
                                 placeholder="Ex: Growth"
                                 name="marca"
-                                required
                                 className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
                                 value={produto.marca}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
@@ -170,11 +206,10 @@ function FormProduto() {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="dataValidade" className="font-semibold text-gray-800">Data de Validade</label>
+                        <label htmlFor="dataValidade" className="font-semibold text-gray-800">Data de Validade (Opcional)</label>
                         <input
                             type="date"
                             name="dataValidade"
-                            required
                             className="border-2 border-slate-300 bg-white/90 focus:border-slate-500 focus:outline-none rounded p-2"
                             value={produto.dataValidade ? produto.dataValidade.split('T')[0] : ''}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
