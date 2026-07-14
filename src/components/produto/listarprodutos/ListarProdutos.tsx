@@ -66,9 +66,19 @@ function ListarProdutos() {
                     >
                         Cadastrar Novo Produto
                     </Link>
+                    
+                    <div className="text-center mt-8">
+                    <Link
+                        to="/"
+                        className="text-green-700 hover:underline"
+                    >
+                        ← Voltar para Home
+                    </Link>
+                </div>
+                
                 </div>
 
-                </div>
+            </div>
 
             </div>
         
