@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { buscar } from '../../../services/Service';
 
 interface Categoria {
     id: number;
@@ -11,31 +12,32 @@ function ListarCategorias() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Dados mockados de uma loja fitness
-        const dadosMock: Categoria[] = [
-            { id: 1, descricao: 'Barras de Cereal - Energia para o treino' },
-            { id: 2, descricao: 'Materiais de Exercício - Colchonetes, halteres e mais' },
-            { id: 3, descricao: 'Suplementos - Whey, creatina e vitaminas' },
-            { id: 4, descricao: 'Roupas Fitness - Leggings, tops e camisas' },
-            { id: 5, descricao: 'Acessórios - Garrafas, luvas e faixas' },
-            { id: 6, descricao: 'Alimentos Saudáveis - Oleaginosas, frutas secas' },
-        ];
+        const carregarCategorias = async () => {
+            try {
+                setLoading(true);
+                await buscar('/categorias', setCategorias, {});
+            } catch (error) {
+                console.error('Erro ao carregar categorias:', error);
+                alert('Erro ao carregar categorias. Tente novamente.');
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        setTimeout(() => {
-            setCategorias(dadosMock);
-            setLoading(false);
-        }, 500);
+        carregarCategorias();
+
+        
     }, []);
 
     if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-[80vh]"
-        style={{ background: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
-      >
-        <p className="text-gray-600">Carregando categorias cadastradas...</p>
-      </div>
-    );
-  }
+        return (
+            <div className="flex justify-center items-center min-h-[80vh]"
+                style={{ background: 'linear-gradient(to right, #C9EED9, #FFFFFF)' }}
+            >
+                <p className="text-gray-600">Carregando categorias cadastradas...</p>
+            </div>
+        );
+    }
 
     return (
         <div
@@ -47,7 +49,7 @@ function ListarCategorias() {
         >
             <div className="container mx-auto">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-                     <span style={{ color: "#2d3748" }}>🏋️ Categorias de Produtos</span>
+                    <span style={{ color: "#2d3748" }}>🏋️ Categorias de Produtos</span>
                 </h2>
 
                 <p className="text-center text-gray-600 mb-8">
