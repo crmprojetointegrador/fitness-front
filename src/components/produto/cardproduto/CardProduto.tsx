@@ -12,7 +12,7 @@ function CardProduto({ produto }: CardProdutoProps) {
                 
             <div>
                 <div className="flex w-full bg-green-100/60 border-b border-green-100 py-3 px-4 items-center gap-4">
-                    <img src='https://i.imgur.com/pK6vSCy.png'
+                    <img src={produto.usuario?.foto || 'https://i.imgur.com/pK6vSCy.png'}
                          className='h-12 rounded-full border-2 border-white shadow-sm' alt="Foto do usuário" />
                     <h3 className='text-lg font-bold text-center uppercase text-green-900'>
                         {produto.usuario?.nome || 'Usuário Desconhecido'}
@@ -41,7 +41,7 @@ function CardProduto({ produto }: CardProdutoProps) {
                     </p>
                     <p>
                       <strong className='font-semibold text-green-700'>Categoria:</strong> 
-                      <span className='ml-1 text-slate-700'>{produto.categoria?.nome || 'Sem Categoria'}</span>
+                      <span className='ml-1 text-slate-700'>{produto.categoria?.descricao || 'Sem Categoria'}</span>
                     </p>
                 </div>
             </div>
