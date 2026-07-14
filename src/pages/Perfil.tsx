@@ -1,12 +1,15 @@
 import { useState, useContext, type FormEvent, type ChangeEvent } from "react";
 import { UserContext } from "../context/UserContext";
-import { atualizar } from "../services/Service";
+import { atualizar, deletar } from "../services/Service";
 import { toast } from "react-toastify";
+import { ToastAlerta } from "../utils/ToastAlerta";
 
 export default function Perfil() {
   const context = useContext(UserContext);
   const [editando, setEditando] = useState(false);
   const [carregando, setCarregando] = useState(false);
+  const [confirmandoExclusao, setConfirmandoExclusao] = useState(false);
+  const [excluindo, setExcluindo] = useState(false);
 
   const usuario = context?.usuarioAtual;
 
@@ -19,7 +22,7 @@ export default function Perfil() {
   });
 
   if (!context || !usuario) return null;
-  const { login } = context;
+  const { login, logout } = context;
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,6 +55,21 @@ export default function Perfil() {
       senha: "",
     });
     setEditando(false);
+  }
+
+  async function handleExcluirConta() {
+    if (!usuario) return;
+    setExcluindo(true);
+    try {
+      await deletar(`/usuarios/${id}`);
+      ToastAlerta("Conta excluída com sucesso!", "sucesso");
+      logout();
+    } catch (error) {
+      ToastAlerta("Erro ao excluir a conta. Tente novamente.", "erro");
+      console.error(error);
+      setExcluindo(false);
+      setConfirmandoExclusao(false);
+    }
   }
 
   return (
@@ -154,6 +172,46 @@ export default function Perfil() {
               </button>
             </div>
           </form>
+        )}
+
+        {!editando && (
+          <div className="mt-6 pt-6 border-t border-gray-100">
+            {!confirmandoExclusao ? (
+              <button
+                onClick={() => setConfirmandoExclusao(true)}
+                className="w-full text-red-600 hover:text-red-800 text-sm font-semibold transition"
+              >
+                Excluir conta
+              </button>
+            ) : (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="text-sm text-red-700 font-semibold mb-1">
+                  Tem certeza que deseja excluir sua conta?
+                </p>
+                <p className="text-xs text-red-600 mb-4">
+                  Essa ação é permanente e não pode ser desfeita.
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setConfirmandoExclusao(false)}
+                    disabled={excluindo}
+                    className="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 rounded-lg transition disabled:opacity-60"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleExcluirConta}
+                    disabled={excluindo}
+                    className="w-1/2 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition disabled:opacity-60"
+                  >
+                    {excluindo ? "Excluindo..." : "Sim, excluir"}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
